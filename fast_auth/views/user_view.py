@@ -13,7 +13,7 @@ router = APIRouter()
 
 
 @router.post(
-    "/auth/user",
+    "/auth/register",
     response_model=dto.User,
     status_code=status.HTTP_201_CREATED,
     tags=["auth"],
