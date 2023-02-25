@@ -32,10 +32,14 @@ EMAIL_SUBSTITUTION = "*"
 
 
 def _get_sensitive_field_regex(field: str) -> Pattern:
-    return re.compile(f"({field}|'{field}'|\"{field}\"){SEPARATOR_PATTERN}{VALUE_PATTERN}")
+    return re.compile(
+        f"({field}|'{field}'|\"{field}\"){SEPARATOR_PATTERN}{VALUE_PATTERN}"
+    )
 
 
-SENSITIVE_FIELD_PATTERNS = [_get_sensitive_field_regex(field) for field in SENSITIVE_FIELDS]
+SENSITIVE_FIELD_PATTERNS = [
+    _get_sensitive_field_regex(field) for field in SENSITIVE_FIELDS
+]
 
 
 FIELD_CAP = r"\1"
@@ -43,9 +47,7 @@ SEPARATOR_CAP = r"\2"
 LEFT_PAREN_CAP = r"\3"
 RIGHT_PAREN_CAP = r"\4"
 
-FIELD_SUBSTITUTION_PATTERN = (
-    f"{FIELD_CAP}{SEPARATOR_CAP}{LEFT_PAREN_CAP}{HIDDEN_FIELD_DISPLAY_VALUE}{RIGHT_PAREN_CAP}"
-)
+FIELD_SUBSTITUTION_PATTERN = f"{FIELD_CAP}{SEPARATOR_CAP}{LEFT_PAREN_CAP}{HIDDEN_FIELD_DISPLAY_VALUE}{RIGHT_PAREN_CAP}"
 
 
 def _sanitize_string(msg: str) -> str:

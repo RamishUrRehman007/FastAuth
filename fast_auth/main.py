@@ -4,21 +4,18 @@ from typing import Callable
 import uvicorn  # type: ignore
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse, Response, JSONResponse
-from fastapi_jwt_auth import AuthJWT
-from fastapi_jwt_auth.exceptions import AuthJWTException
+from fastapi.responses import JSONResponse, RedirectResponse, Response
 from fastapi_csrf_protect import CsrfProtect
 from fastapi_csrf_protect.exceptions import CsrfProtectError
+from fastapi_jwt_auth import AuthJWT
+from fastapi_jwt_auth.exceptions import AuthJWTException
 from pydantic import BaseModel
 
 import config
 from error_handler import exception_handler
 from exceptions import FastAuthAppError
 from libs import log_sanitizer
-from views import (
-    status_view,
-    user_view
-)
+from views import status_view, user_view
 
 
 def init_logging() -> None:
@@ -40,12 +37,14 @@ def add_exception_handlers(app: FastAPI) -> None:
 
 def add_middlewares(app: FastAPI) -> None:
     @app.middleware("http")
-    async def replace_content_type_header(request: Request, call_next: Callable) -> Response:
+    async def replace_content_type_header(
+        request: Request, call_next: Callable
+    ) -> Response:
         response = await call_next(request)
         if response.headers.get("content-type") == "application/json":
             response.headers["content-type"] = "application/json; charset=utf-8"
         return response
-    
+
     @app.middleware("http")
     async def TokenMiddleware(request: Request, call_next):
         if request.url.path in routes_with_middleware:
@@ -59,15 +58,23 @@ def add_middlewares(app: FastAPI) -> None:
                     request.state.user_email = jwt_data["sub"]
                     csrf_protect.validate_csrf_in_cookies(request)
                 except AuthJWTException:
-                    return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content={"detail":"Invalid JWT provided"})
+                    return JSONResponse(
+                        status_code=status.HTTP_403_FORBIDDEN,
+                        content={"detail": "Invalid JWT provided"},
+                    )
                 except CsrfProtectError as exc:
-                    return JSONResponse(status_code=exc.status_code, content={"detail":exc.message})
+                    return JSONResponse(
+                        status_code=exc.status_code, content={"detail": exc.message}
+                    )
             else:
                 logging.info("Middleware: Token does not exist")
-                return JSONResponse(status_code=status.HTTP_400_BAD_REQUEST, content={"detail":"Token not supplied"})
+                return JSONResponse(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    content={"detail": "Token not supplied"},
+                )
 
         return await call_next(request)
-        
+
 
 init_logging()
 
@@ -90,9 +97,7 @@ app.add_middleware(
 )
 
 
-routes_with_middleware = [
-    '/v1/auth/user'
-]
+routes_with_middleware = ["/v1/auth/user"]
 
 
 class JWTSettings(BaseModel):
@@ -107,12 +112,12 @@ def get_jwt_config() -> JWTSettings:
 
 
 class CsrfSettings(BaseModel):
-  secret_key: str = config.CSRF_SECRET
+    secret_key: str = config.CSRF_SECRET
 
 
 @CsrfProtect.load_config
 def get_csrf_config() -> CsrfSettings:
-  return CsrfSettings()
+    return CsrfSettings()
 
 
 @app.get("/")

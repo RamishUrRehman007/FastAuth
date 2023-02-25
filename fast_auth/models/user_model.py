@@ -9,14 +9,18 @@ from models.common import User, result_to_user
 from session import AsyncSessionLocal
 
 
-async def create_user(db_session: AsyncSessionLocal, unsaved_user: dto.UnsavedUser) -> dto.User:
+async def create_user(
+    db_session: AsyncSessionLocal, unsaved_user: dto.UnsavedUser
+) -> dto.User:
     user = User(**unsaved_user.dict())
     db_session.add(user)
     try:
         await db_session.flush()
     except exc.IntegrityError:
         await db_session.rollback()
-        raise DuplicateUserError(f"User with email {unsaved_user.email} already exists.")
+        raise DuplicateUserError(
+            f"User with email {unsaved_user.email} already exists."
+        )
 
     new_user = await find_one(db_session, dto.UserFilter(user_id=dto.UserID(user.id)))
     assert new_user

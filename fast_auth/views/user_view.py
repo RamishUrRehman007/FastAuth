@@ -1,4 +1,3 @@
-
 from fastapi import APIRouter, Depends, HTTPException, status, Request
 from fastapi.responses import JSONResponse
 from fastapi_jwt_auth import AuthJWT
@@ -41,10 +40,10 @@ async def register_user(
     tags=["auth"],
 )
 async def login(
-    auth_user: dto.AuthUser, 
-    db_session: Session = Depends(get_db), 
+    auth_user: dto.AuthUser,
+    db_session: Session = Depends(get_db),
     authorize: AuthJWT = Depends(),
-    csrf_protect:CsrfProtect = Depends()
+    csrf_protect: CsrfProtect = Depends(),
 ) -> Any:
     """
     Auth view for generating auth tokens given an AuthUser payload.
@@ -56,12 +55,13 @@ async def login(
     user = await user_domain.auth_user(db_session, auth_user)
     if user is None:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid username or password."
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid username or password.",
         )
 
     content = {"message": "Login Successfully"}
     response = JSONResponse(content=content)
-    
+
     response.set_cookie(
         key="access_token", value=authorize.create_access_token(subject=user.email)
     )

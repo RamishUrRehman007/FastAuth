@@ -21,7 +21,12 @@ def _get_boolean_env_variable(name: str) -> bool:
 
 
 def _get_comma_separated_env_variable(name: str) -> List[str]:
-    return [element.strip() for element in os.getenv(name, "").split(",") if element.strip() != ""]
+    return [
+        element.strip()
+        for element in os.getenv(name, "").split(",")
+        if element.strip() != ""
+    ]
+
 
 ROOT_PATH = os.getenv("ROOT_PATH", "")
 ENVIRONMENT = os.getenv("ENVIRONMENT", "dev")

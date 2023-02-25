@@ -1,8 +1,7 @@
 from typing import List, Optional, Dict, Any, NewType
 from datetime import datetime
-from typing import Generic, List, NewType, Optional, TypeVar
+from typing import List, NewType, Optional, TypeVar
 from pydantic import BaseModel, ConstrainedStr, EmailStr
-from pydantic.generics import GenericModel
 
 UserID = NewType("UserID", int)
 ResponseT = TypeVar("ResponseT")
@@ -31,15 +30,14 @@ class UserFilter(BaseModel):
     email: Optional[str] = None
     password: Optional[str] = None
 
+
 class AuthUser(BaseModel):
     email: EmailStr
     password: RequiredStr
 
 
-
 class ErrorResponse(BaseModel):
     detail: str
-
 
 
 class LinkResponse(BaseModel):

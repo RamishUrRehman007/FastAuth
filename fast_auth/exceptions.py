@@ -13,6 +13,7 @@ class EntityNotFoundError(FastAuthAppError):
 class DuplicateEntityError(FastAuthAppError):
     pass
 
+
 class DuplicateUserError(DuplicateEntityError):
     pass
 
