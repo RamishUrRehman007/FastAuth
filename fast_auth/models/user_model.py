@@ -1,12 +1,11 @@
 from typing import Optional
 
-from sqlalchemy import exc, select
-from sqlalchemy.orm import Query
-
 import dto
 from exceptions import DuplicateUserError
 from models.common import User, result_to_user
 from session import AsyncSessionLocal
+from sqlalchemy import exc, select
+from sqlalchemy.orm import Query
 
 
 async def create_user(

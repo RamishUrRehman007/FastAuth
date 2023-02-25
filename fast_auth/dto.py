@@ -1,6 +1,6 @@
-from typing import List, Optional, Dict, Any, NewType
 from datetime import datetime
-from typing import List, NewType, Optional, TypeVar
+from typing import Any, Dict, List, NewType, Optional, TypeVar
+
 from pydantic import BaseModel, ConstrainedStr, EmailStr
 
 UserID = NewType("UserID", int)

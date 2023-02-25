@@ -1,14 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Request
-from fastapi.responses import JSONResponse
-from fastapi_jwt_auth import AuthJWT
-from fastapi_csrf_protect import CsrfProtect
-from sqlalchemy.orm import Session
+from typing import Any
 
 import dto
 from domains import user_domain
+from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi.responses import JSONResponse
+from fastapi_csrf_protect import CsrfProtect
+from fastapi_jwt_auth import AuthJWT
 from models.common import get_db
-
-from typing import Any
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 

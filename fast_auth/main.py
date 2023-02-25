@@ -1,7 +1,10 @@
 import logging
 from typing import Callable
 
+import config
 import uvicorn  # type: ignore
+from error_handler import exception_handler
+from exceptions import FastAuthAppError
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, RedirectResponse, Response
@@ -9,12 +12,8 @@ from fastapi_csrf_protect import CsrfProtect
 from fastapi_csrf_protect.exceptions import CsrfProtectError
 from fastapi_jwt_auth import AuthJWT
 from fastapi_jwt_auth.exceptions import AuthJWTException
-from pydantic import BaseModel
-
-import config
-from error_handler import exception_handler
-from exceptions import FastAuthAppError
 from libs import log_sanitizer
+from pydantic import BaseModel
 from views import status_view, user_view
 
 

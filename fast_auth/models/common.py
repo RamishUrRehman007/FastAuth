@@ -1,15 +1,9 @@
 from typing import Any
 
-from sqlalchemy import (
-    Column,
-    DateTime,
-    Integer,
-    Text,
-    text,
-)
-from sqlalchemy.ext.declarative import declarative_base
 import dto
 from session import AsyncSessionLocal
+from sqlalchemy import Column, DateTime, Integer, Text, text
+from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()  # type: Any
 

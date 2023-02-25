@@ -1,11 +1,10 @@
 from typing import Optional
 
-from passlib.context import CryptContext
-
 import dto
-from session import AsyncSessionLocal
 from models import user_model
 from models.common import User, result_to_user
+from passlib.context import CryptContext
+from session import AsyncSessionLocal
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

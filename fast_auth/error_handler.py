@@ -1,12 +1,11 @@
 import logging
 from typing import Mapping, Optional, Type
 
+import exceptions
 from fastapi import Request, status
 from fastapi.responses import JSONResponse
-from fastapi_jwt_auth.exceptions import AuthJWTException
 from fastapi_csrf_protect.exceptions import CsrfProtectError
-
-import exceptions
+from fastapi_jwt_auth.exceptions import AuthJWTException
 
 logger = logging.getLogger(__name__)
 

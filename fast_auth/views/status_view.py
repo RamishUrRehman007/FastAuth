@@ -1,7 +1,7 @@
-from fastapi import APIRouter
-
-import config, dto
+import config
+import dto
 from config import logger
+from fastapi import APIRouter
 
 router = APIRouter()
 
