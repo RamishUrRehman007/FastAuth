@@ -1,0 +1,42 @@
+version: "3.7"
+services:
+  api:
+    build: .
+    container_name: fast_auth-api
+    ports:
+      - "${APP_PORT:-10000}:10000"
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT}
+      ENABLE_RELOAD_UVICORN: ${ENABLE_RELOAD_UVICORN}
+      POSTGRES_URL: ${POSTGRES_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_ISSUER: ${JWT_ISSUER}
+      CSRF_SECRET: ${CSRF_SECRET}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
+      ROOT_PATH: ""
+    volumes:
+      - ".:/srv"
+    networks:
+      - internal
+    hostname: fast_auth
+    depends_on:
+      - "postgres"
+  postgres:
+    image: postgres:13.3
+    container_name: fast_auth-postgres
+    ports:
+      - "${HOST_DB_PORT:-5432}:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    networks:
+      - internal
+    volumes:
+      - "./migrations:/mnt"
+      - ./0000_init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/postgresql/data
+volumes:
+  db_data: {}
+networks:
+  internal:
+    external: false
