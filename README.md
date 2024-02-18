@@ -5,7 +5,7 @@
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-CC2927?style=for-the-badge&logo=sqlalchemy)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker)
 
-FastAuth is a microservice designed to authenticate and authorize users through FastAPI, PostgreSQL, SQLAlchemy, and Docker. By utilizing modern standards like JWT (JSON Web Tokens) and CSRF (Cross-Site Request Forgery) tokens, FastAuth aims to secure accounts from common cyber threats such as token theft.
+FastAuth is a microservice designed to authenticate and authorize users through FastAPI, PostgreSQL, SQLAlchemy, and Docker. By utilizing JWT (JSON Web Tokens) and CSRF (Cross-Site Request Forgery) tokens, FastAuth aims to secure accounts from common cyber threats such as token theft.
 
 ## :building_construction: Architecture
 
