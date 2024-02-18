@@ -22,7 +22,7 @@ FastAuth leverages an architecture composed of Python, FastAPI, PostgreSQL, and 
 
 FastAuth is a microservice focused on user authentication and authorization. It uses a POST request for user registration, login, and authentication, assigning JWT and CSRF tokens to authorize users to access their details. The project utilizes FastAPI for the web framework, PostgreSQL for the database, SQLAlchemy for ORM, and Docker for containerization.
 
-## :page_with_curl: Getting Started
+## :rocket: Getting Started
 
 To get FastAuth running on your local machine, follow these steps:
 
